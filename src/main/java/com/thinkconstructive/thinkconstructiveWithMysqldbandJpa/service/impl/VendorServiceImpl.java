@@ -1,5 +1,6 @@
 package com.thinkconstructive.thinkconstructiveWithMysqldbandJpa.service.impl;
 
+import com.thinkconstructive.thinkconstructiveWithMysqldbandJpa.exception.VendorNotFoundException;
 import com.thinkconstructive.thinkconstructiveWithMysqldbandJpa.model.Vendor;
 import com.thinkconstructive.thinkconstructiveWithMysqldbandJpa.repository.VendorRepository;
 import com.thinkconstructive.thinkconstructiveWithMysqldbandJpa.service.VendorService;
@@ -47,7 +48,9 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Vendor getVendor(Long vendorId) {
-
+        if(vendorRepository.findById(vendorId).isEmpty()){
+            throw new VendorNotFoundException("this vendor is not found");
+        }
         return (Vendor) vendorRepository.findById(vendorId).get();
     }
 
